@@ -72,6 +72,8 @@ class board:
 	def update(self):
 		temp = self.data
 		cursor = self.mostRecent
+		print "top"
+		print self.mostRecent
 		goal = -1
 		count = 0
 		for x in range(0,7):
@@ -88,16 +90,23 @@ class board:
 			if goal == -1:
 				continue
 				
-			while self.data[cursor[0]][cursor[1]] == goal and (0 <= cursor[0] <= 7) and (0 <= cursor[1] <= 7):
+			while (0 <= cursor[0] <= 7) and (0 <= cursor[1] <= 7) and self.data[cursor[0]][cursor[1]] == goal:
 				count += 1
 				self.movePoint(cursor, x)
 			
 			if (0 <= cursor[0] <= 7) and (0 <= cursor[1] <= 7):
 				continue
-							
-			cursor = self.mostRecent
+						
+			cursor = self.mostRecent	
+			print "here"
+			print cursor
+			print self.mostRecent
 			goal = self.data[cursor[0]][cursor[1]]
 			cursor = self.movePoint(cursor, x)
+			print "here2"
+			print cursor
+			print self.mostRecent
+			print goal
 			for y in range(0,count):
 				temp[cursor[0]][cursor[1]] = goal
 				cursor = self.movePoint(cursor, x)
