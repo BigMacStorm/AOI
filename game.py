@@ -12,6 +12,7 @@ class Game:
         player = 1
         while self.board.done() != True:
             self.board.write()
+            print "Player 0: %d -- Player 1: %d" %(self.board.count(True), self.board.count(False))
 
             player = 0 if (player == 1) else 1
 
@@ -30,6 +31,7 @@ class Game:
             self.board.update()
 
         self.board.write()
+        print "Player 0: %d -- Player 1: %d" %(self.board.count(True), self.board.count(False))
         print "Game over"
         player0Score = self.board.count(True)
         player1Score = self.board.count(False)
