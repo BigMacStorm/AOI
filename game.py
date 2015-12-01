@@ -44,7 +44,3 @@ class Game:
     def getCompCoord(self):
         # The AI's not very smart yet
         return {'i': 0, 'j': 0}
-
-    def playerWins(self, player):
-        # stub
-        return False
