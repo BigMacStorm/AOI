@@ -1,5 +1,6 @@
 #!/usr/bin/env python2.7
 import numpy as np
+import sys
 
 class board:
 	data = np.zeros((8,8), dtype=np.int)
@@ -104,7 +105,14 @@ class board:
 		self.data = temp
 			
 				
-				
+	def write(self):
+		for x in range(0,7):
+			for y in range(0,7):
+				sys.stdout.write(data[x][y])
+			print(" ")
+		print(" ")
+	
+		
 			
 			
 			
