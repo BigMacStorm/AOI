@@ -13,14 +13,18 @@ class Game:
         while self.board.done() != True:
             player = 0 if (player == 1) else 1
 
-            coord = {}
-            if self.playerIsHuman[player] == True:
-                coord = self.getHumanCoord()
-            else:
-                coord = self.getCompCoord()
+            moveGood = False
+            while moveGood != True:
+                coord = {}
+                if self.playerIsHuman[player] == True:
+                    coord = self.getHumanCoord()
+                else:
+                    coord = self.getCompCoord()
+                moveGood = self.board.makeMove(coord['i'], coord['j'])
+                if moveGood != True:
+                    print "Invalid move."
 
             print "Player %d chose (%d, %d)" %(player, coord['i'], coord['j'])
-            self.board.makeMove(coord['i'], coord['j'])
             self.board.update()
 
         print "Game over"
