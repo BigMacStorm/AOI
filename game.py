@@ -11,6 +11,8 @@ class Game:
     def play(self):
         player = 1
         while self.board.done() != True:
+            self.board.write()
+
             player = 0 if (player == 1) else 1
 
             moveGood = False
@@ -27,6 +29,7 @@ class Game:
             print "Player %d chose (%d, %d)" %(player, coord['i'], coord['j'])
             self.board.update()
 
+        self.board.write()
         print "Game over"
         player0Score = self.board.count(True)
         player1Score = self.board.count(False)
