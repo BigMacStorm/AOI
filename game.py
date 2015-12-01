@@ -21,6 +21,7 @@ class Game:
 
             print "Player %d chose (%d, %d)" %(player, coord['i'], coord['j'])
             self.board.makeMove(coord['i'], coord['j'])
+            self.board.update()
 
         print "Game over"
         player0Score = self.board.count(True)
