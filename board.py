@@ -26,8 +26,8 @@ class board:
 			return False
 			
 	def done(self):
-		for x in range(0,7):
-			for y in range(0,7):
+		for x in range(0,8):
+			for y in range(0,8):
 				if self.data[x][y] == 0:
 					return False
 		return True
@@ -39,8 +39,8 @@ class board:
 			compare = 1
 		else:
 			compare = 2		
-		for x in range(0,7):
-			for y in range(0,7):
+		for x in range(0,8):
+			for y in range(0,8):
 				if self.data[x][y] == compare:
 					counter += 1
 		return counter
@@ -62,61 +62,52 @@ class board:
 			point[0] -= 1
 			point[1] -= 1
 		elif direction == 6:
-			point[0] -= 1
+			point[1] -= 1
 		elif direction == 7:
 			point[0] += 1
 			point[1] -= 1
-		return point
 			
 		
 	def update(self):
 		temp = self.data
-		cursor = self.mostRecent
-		print "top"
-		print self.mostRecent
+		cursor = [self.mostRecent[0], self.mostRecent[1]]
 		goal = -1
 		count = 0
-		for x in range(0,7):
+		for x in range(0,8):
+			cursor = [self.mostRecent[0], self.mostRecent[1]]
 			count = 0
 			goal = self.data[cursor[0]][cursor[1]]
 			
 			if goal == 1:
-				goal == 2
+				goal = 2
 			elif goal == 2:
-				goal == 1
+				goal = 1
 				
-			cursor = self.mostRecent
-			cursor = self.movePoint(cursor, x)
-			if goal == -1:
+			cursor = [self.mostRecent[0], self.mostRecent[1]]
+			self.movePoint(cursor, x)
+			if goal == 0:
 				continue
-				
+			
 			while (0 <= cursor[0] <= 7) and (0 <= cursor[1] <= 7) and self.data[cursor[0]][cursor[1]] == goal:
 				count += 1
 				self.movePoint(cursor, x)
 			
-			if (0 <= cursor[0] <= 7) and (0 <= cursor[1] <= 7):
+			if (not (0 <= cursor[0] <= 7)) or (not (0 <= cursor[1] <= 7)) or self.data[cursor[0]][cursor[1]] != self.data[self.mostRecent[0], self.mostRecent[1]]:
 				continue
 						
-			cursor = self.mostRecent	
-			print "here"
-			print cursor
-			print self.mostRecent
+			cursor = [self.mostRecent[0], self.mostRecent[1]]	
 			goal = self.data[cursor[0]][cursor[1]]
-			cursor = self.movePoint(cursor, x)
-			print "here2"
-			print cursor
-			print self.mostRecent
-			print goal
+			self.movePoint(cursor, x)
 			for y in range(0,count):
 				temp[cursor[0]][cursor[1]] = goal
-				cursor = self.movePoint(cursor, x)
+				self.movePoint(cursor, x)
 				
 		self.data = temp
 			
 				
 	def write(self):
-		for x in range(0,7):
-			for y in range(0,7):
+		for x in range(0,8):
+			for y in range(0,8):
 				print(self.data[x][y]),
 			print(" ")
 		print(" ")
