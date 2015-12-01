@@ -20,11 +20,13 @@ class Game:
                 coord = self.getCompCoord()
 
             print "Player %d chose (%d, %d)" %(player, coord['i'], coord['j'])
-
             self.board.makeMove(coord['i'], coord['j'])
 
-        #print "Player %d wins!" %(player)
         print "Game over"
+        player0Score = self.board.count(True)
+        player1Score = self.board.count(False)
+        winner = 0 if (player0Score > player1Score) else 0
+        print "Player %d wins!" %(winner)
 
     def getHumanCoord(self):
         coordList = raw_input("Enter coordinate for move (row col): ").split()
