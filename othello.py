@@ -1,9 +1,10 @@
 class Game:
-    def __init__(self):
+    def __init__(self, numPlayers):
         pass
 
     def play(self):
         print "~Othello~"
+
         player = 1
         while self.playerWins(player) != True:
             player = 0 if (player == 1) else 1
@@ -23,5 +24,6 @@ class Game:
         return False
 
 # Main program
-game = Game()
+numPlayers = int(raw_input("Number of players (0-2): "))
+game = Game(numPlayers)
 game.play()
