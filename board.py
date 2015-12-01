@@ -4,7 +4,7 @@ import numpy as np
 class board:
 	data = np.zeros((8,8), dtype=np.int)
 	currentMove = True
-	mostRecent = (-1,-1)
+	mostRecent = [-1,-1]
 	
 	def __init__(self):
 		self.data[3][3] = 1
@@ -19,7 +19,7 @@ class board:
 			else:
 				self.data[x][y] = 2
 			self.currentMove = not self.currentMove
-			self.mostRecent = (x,y)
+			self.mostRecent = [x,y]
 			return True
 		else:
 			return False
@@ -94,7 +94,7 @@ class board:
 			if (0 <= cursor[0] <= 7) and (0 <= cursor[1] <= 7):
 				continue
 							
-			cursor = mostRecent
+			cursor = self.mostRecent
 			goal = self.data[cursor[0]][cursor[1]]
 			cursor = self.movePoint(cursor, x)
 			for y in range(0,count):
