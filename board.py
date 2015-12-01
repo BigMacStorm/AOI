@@ -108,7 +108,7 @@ class board:
 	def write(self):
 		for x in range(0,7):
 			for y in range(0,7):
-				sys.stdout.write(self.data[x][y])
+				print(self.data[x][y]),
 			print(" ")
 		print(" ")
 	
