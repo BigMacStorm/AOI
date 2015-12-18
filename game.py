@@ -110,7 +110,15 @@ class Game:
 			temp[1] = self.minimaxRecurse(copy, depth-1)
 			temp[1] *= -1
 			if temp[1] > bestMove[1]:
+				print "better"
 				bestMove = temp
+			else:
+				print "--------------------"
+				print temp[1]
+				print bestMove[1]
+				print "--------------------"
+		print "================"
+		print len(moves)
 		print bestMove[0][2]
 		return bestMove
 
