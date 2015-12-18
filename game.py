@@ -19,7 +19,7 @@ class Game:
 				continue
 
 			self.board.write()
-			print "Player 0: %d -- Player 1: %d" %(self.board.count(True), self.board.count(False))
+			print "Player 1: %d -- Player 2: %d" %(self.board.count(True), self.board.count(False))
 			player = 0 if (player == 1) else 1
 
 			if not self.board.possible():
@@ -39,17 +39,17 @@ class Game:
 						print "Human player has chosen to skip their turn"
 						break
 					print "Invalid move."
-			print "Player %d chose (%d, %d)" %(player, coord['i'], coord['j'])
+			print "Player %d chose (%d, %d)" %(player+1, coord['i'], coord['j'])
 			self.board.update()
 			self.board.changePlayer()
 
 		self.board.write()
-		print "Player 0: %d -- Player 1: %d" %(self.board.count(True), self.board.count(False))
+		print "Player 1: %d -- Player 2: %d" %(self.board.count(True), self.board.count(False))
 		print "Game over"
 		player0Score = self.board.count(True)
 		player1Score = self.board.count(False)
 		winner = 0 if (player0Score > player1Score) else 1
-		print "Player %d wins!" %(winner)
+		print "Player %d wins!" %(winner+1)
 
 	def getHumanCoord(self):
 		coordList = raw_input("Enter coordinate for move (row col): ").split()

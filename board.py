@@ -117,7 +117,10 @@ class board:
 		for x in range(0,8):
                         print("%d|" %(x)),
 			for y in range(0,8):
-				print(self.data[x][y]),
+                                if self.data[x][y] == 0:
+                                        print("-"),
+                                else:
+				        print(self.data[x][y]),
 			print(" ")
                 print("  "),
                 for x in range(0,8):
