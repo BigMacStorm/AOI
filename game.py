@@ -59,7 +59,7 @@ class Game:
 	def getCompCoord(self):
 		# The AI's kinda smart
 		#the value passed into the handler is the desired depth
-		move = self.minimaxHandler(3)
+		move = self.minimaxHandler(2)
 		print "Making move %d,%d with score %d" %(move[0][0], move[0][1], move[1])
 		return {'i': move[0][0], 'j': move[0][1]}
 
@@ -111,6 +111,7 @@ class Game:
 			temp[1] *= -1
 			if temp[1] > bestMove[1]:
 				bestMove = temp
+		print bestMove[0][2]
 		return bestMove
 
 	def minimaxRecurse(self, sentBoard, depth):

@@ -197,11 +197,13 @@ class board:
 
 	def getMoveList(self):
 		moveList = []
+		counter = 0
 		for x in range(0,8):
 			for y in range(0,8):
 				if self.check(x, y):
-					moveList.append([x,y])
-		random.shuffle(moveList)
+					moveList.append([x,y,counter])
+					counter += 1
+		#random.shuffle(moveList)
 		return moveList
 
 	def changePlayer(self):
