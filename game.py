@@ -56,7 +56,7 @@ class Game:
 	def getCompCoord(self):
 		# The AI's kinda smart
 		#the value passed into the handler is the desired depth
-		move = self.minimaxHandler(2)
+		move = self.minimaxHandler(3)
 		print "Making move %d,%d with score %d" %(move[0][0], move[0][1], move[1])
 		return {'i': move[0][0], 'j': move[0][1]}
 
@@ -105,6 +105,7 @@ class Game:
 			copy.changePlayer()
 			temp[0] = x
 			temp[1] = self.minimaxRecurse(copy, depth-1)
+			temp[1] *= -1
 			if temp[1] > bestMove[1]:
 				bestMove = temp
 		return bestMove
@@ -113,14 +114,15 @@ class Game:
 		if depth == 0 or not sentBoard.possible():
 			return self.evaluate(sentBoard)
 		moves = sentBoard.getMoveList()
-		bestMove = 9999999999
+		bestMove = None
 		temp = 0
 		for x in moves:
 			copy = board.board(sentBoard)
 			copy.makeMove(x[0], x[1])
 			copy.changePlayer()
 			temp = self.minimaxRecurse(copy, depth-1)
-			if temp < bestMove:
+			temp *= -1
+			if bestMove == None or temp > bestMove:
 				bestMove = temp
 		return bestMove
 

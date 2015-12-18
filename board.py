@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.7
 import numpy as np
 import sys
+import random
 
 class board:
 
@@ -188,6 +189,7 @@ class board:
 			for y in range(0,8):
 				if self.check(x, y):
 					moveList.append([x,y])
+		random.shuffle(moveList)
 		return moveList
 
 	def changePlayer(self):
