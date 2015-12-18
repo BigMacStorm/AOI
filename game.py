@@ -34,11 +34,11 @@ class Game:
 				else:
 					coord = self.getCompCoord()
 				moveGood = self.board.makeMove(coord['i'], coord['j'])
-				if moveGood != True and self.playerIsHuman[player] == True:
+				if moveGood != True:
 					print "Invalid move."
-			self.board.changePlayer()
 			print "Player %d chose (%d, %d)" %(player, coord['i'], coord['j'])
 			self.board.update()
+			self.board.changePlayer()
 
 		self.board.write()
 		print "Player 0: %d -- Player 1: %d" %(self.board.count(True), self.board.count(False))
@@ -54,8 +54,11 @@ class Game:
 		return coord
 
 	def getCompCoord(self):
-		# The AI's not very smart yet
-		return {'i': random.randint(0,7), 'j': random.randint(0,7)}
+		# The AI's kinda smart
+		#the value passed into the handler is the desired depth
+		move = self.minimaxHandler(2)
+		print "Making move %d,%d with score %d" %(move[0][0], move[0][1], move[1])
+		return {'i': move[0][0], 'j': move[0][1]}
 
 	#hueristic function that will score the board for the current plauyer. 
 	#returns the score for the current player so will need to handle that
@@ -64,7 +67,7 @@ class Game:
 	#1. Count the number of pieces
 	#2. Give extra points to the pieces in the corner
 	#3. Count the number of available moves
-	def eval(self, sentBoard):
+	def evaluate(self, sentBoard):
 		score = 0
 		temp = 0
 		compare = 1
@@ -79,19 +82,47 @@ class Game:
 				x == 7 and y == 0 or \
 				x == 7 and y == 7 or \
 				x == 0 and y == 7:
-					temp += 10
+					temp += 20
 				#if it equals the current player
 				if sentBoard.data[x][y] == compare:
 					score += temp
 				else:
 					score -= temp
 		ownMoveCount = sentBoard.getMoveCount(compare)
-		compare = 1 if (player == 2) else 1
+		compare = 1 if (sentBoard.currentMove == False) else 2
 		enemyMoveCount = sentBoard.getMoveCount(compare)
-		score += ((ownMoveCount - enemyMoveCount) * 3)
+		score += ((ownMoveCount - enemyMoveCount) * 2)
 
 		return score
 
+	def minimaxHandler(self, depth):
+		moves = self.board.getMoveList()
+		bestMove = [None, 0]
+		temp = [None, 0]
+		for x in moves:
+			copy = board.board(self.board)
+			copy.makeMove(x[0], x[1])
+			copy.changePlayer()
+			temp[0] = x
+			temp[1] = self.minimaxRecurse(copy, depth-1)
+			if bestMove[0] == None or temp[1] > bestMove[1]:
+				bestMove = temp
+		return bestMove
+
+	def minimaxRecurse(self, sentBoard, depth):
+		if depth == 0 or not sentBoard.possible():
+			return self.evaluate(sentBoard) * -1
+		moves = sentBoard.getMoveList()
+		bestMove = None
+		temp = 0
+		for x in moves:
+			copy = board.board(sentBoard)
+			copy.makeMove(x[0], x[1])
+			copy.changePlayer()
+			temp = self.minimaxRecurse(copy, depth-1)
+			if bestMove == None or temp > bestMove:
+				bestMove = temp
+		return bestMove
 
 
 

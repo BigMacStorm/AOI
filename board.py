@@ -3,15 +3,21 @@ import numpy as np
 import sys
 
 class board:
-	data = np.zeros((8,8), dtype=np.int)
-	currentMove = True
-	mostRecent = [-1,-1]
 	
-	def __init__(self):
+	def __init__(self, copy = None):
+		self.data = np.zeros((8,8), dtype=np.int)
+		self.currentMove = True
+		self.mostRecent = [-1,-1]
 		self.data[3][3] = 1
 		self.data[4][4] = 1
 		self.data[3][4] = 2
 		self.data[4][3] = 2
+		if copy != None:
+			self.currentMove = copy.currentMove
+			self.mostRecent = copy.mostRecent
+			for x in range(0,8):
+				for y in range(0,8):
+					self.data[x][y] = copy.data[x][y]
 		
 	def makeMove(self, x, y):
 		if (not self.check(x,y)):
@@ -115,6 +121,8 @@ class board:
 		
 	#returns a single bool on if a move is doable
 	def check(self, xSent, ySent):
+		if self.data[xSent][ySent] != 0:
+			return False
 		storage = self.data[xSent][ySent]
 		temp = self.data
 		cursor = [xSent, ySent]
@@ -174,7 +182,7 @@ class board:
 		return count
 
 
-	def getMoveList(self, player):
+	def getMoveList(self):
 		moveList = []
 		for x in range(0,8):
 			for y in range(0,8):
