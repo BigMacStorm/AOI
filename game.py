@@ -56,3 +56,43 @@ class Game:
 	def getCompCoord(self):
 		# The AI's not very smart yet
 		return {'i': random.randint(0,7), 'j': random.randint(0,7)}
+
+	#hueristic function that will score the board for the current plauyer. 
+	#returns the score for the current player so will need to handle that
+	#inside of the minimax recursive function
+	#current algorithm is three fold:
+	#1. Count the number of pieces
+	#2. Give extra points to the pieces in the corner
+	#3. Count the number of available moves
+	def eval(self, sentBoard):
+		score = 0
+		temp = 0
+		compare = 1
+		if not sentBoard.currentMove:
+			compare = 2
+		for x in range(0,8):
+			for y in range (0,8):
+				if sentBoard.data[x][y] == 0:
+					continue
+				temp = 1
+				if x == 0 and y == 0 or \
+				x == 7 and y == 0 or \
+				x == 7 and y == 7 or \
+				x == 0 and y == 7:
+					temp += 10
+				#if it equals the current player
+				if sentBoard.data[x][y] == compare:
+					score += temp
+				else:
+					score -= temp
+		ownMoveCount = sentBoard.getMoveCount(compare)
+		compare = 1 if (player == 2) else 1
+		enemyMoveCount = sentBoard.getMoveCount(compare)
+		score += ((ownMoveCount - enemyMoveCount) * 3)
+
+		return score
+
+
+
+
+

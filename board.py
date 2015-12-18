@@ -113,7 +113,7 @@ class board:
 			print(" ")
 		print(" ")
 		
-	#returns how many pieces the proposed move will flip
+	#returns a single bool on if a move is doable
 	def check(self, xSent, ySent):
 		storage = self.data[xSent][ySent]
 		temp = self.data
@@ -166,7 +166,21 @@ class board:
 		return False
 
 	def getMoveCount(self, player):
-		pass
+		count = 0
+		for x in range(0,8):
+			for y in range(0,8):
+				if self.check(x, y):
+					count += 1
+		return count
+
+
+	def getMoveList(self, player):
+		moveList = []
+		for x in range(0,8):
+			for y in range(0,8):
+				if self.check(x, y):
+					moveList.append([x,y])
+		return moveList
 
 	def changePlayer(self):
 		self.currentMove = not self.currentMove
