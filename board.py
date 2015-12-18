@@ -21,7 +21,6 @@ class board:
 				self.data[x][y] = 1
 			else:
 				self.data[x][y] = 2
-			self.currentMove = not self.currentMove
 			self.mostRecent = [x,y]
 			return True
 		else:
@@ -68,8 +67,8 @@ class board:
 		elif direction == 7:
 			point[0] += 1
 			point[1] -= 1
-			
-		
+	
+	#updates the board		
 	def update(self):
 		temp = self.data
 		cursor = [self.mostRecent[0], self.mostRecent[1]]
@@ -105,8 +104,8 @@ class board:
 				self.movePoint(cursor, x)
 				
 		self.data = temp
-			
-				
+	
+	#prints the board out		
 	def write(self):
 		for x in range(0,8):
 			for y in range(0,8):
@@ -114,6 +113,7 @@ class board:
 			print(" ")
 		print(" ")
 		
+	#returns how many pieces the proposed move will flip
 	def check(self, xSent, ySent):
 		storage = self.data[xSent][ySent]
 		temp = self.data
@@ -164,8 +164,9 @@ class board:
 				if self.data[x][y] == 0 and self.check(x, y):
 					return True
 		return False
-	
-			
-			
-		
-		
+
+	def getMoveCount(self, player):
+		pass
+
+	def changePlayer(self):
+		self.currentMove = not self.currentMove

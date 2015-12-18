@@ -11,7 +11,13 @@ class Game:
 
 	def play(self):
 		player = 1
-		while self.board.done() != True:
+		while True:
+			if self.board.possible() != True:
+				self.board.changePlayer()
+				if(self.board.possible() != True):
+					break
+				continue
+
 			self.board.write()
 			print "Player 0: %d -- Player 1: %d" %(self.board.count(True), self.board.count(False))
 			player = 0 if (player == 1) else 1
@@ -30,7 +36,7 @@ class Game:
 				moveGood = self.board.makeMove(coord['i'], coord['j'])
 				if moveGood != True and self.playerIsHuman[player] == True:
 					print "Invalid move."
-
+			self.board.changePlayer()
 			print "Player %d chose (%d, %d)" %(player, coord['i'], coord['j'])
 			self.board.update()
 
@@ -39,7 +45,7 @@ class Game:
 		print "Game over"
 		player0Score = self.board.count(True)
 		player1Score = self.board.count(False)
-		winner = 0 if (player0Score > player1Score) else 0
+		winner = 0 if (player0Score > player1Score) else 1
 		print "Player %d wins!" %(winner)
 
 	def getHumanCoord(self):
