@@ -115,9 +115,17 @@ class board:
 	#prints the board out
 	def write(self):
 		for x in range(0,8):
+                        print("%d|" %(x)),
 			for y in range(0,8):
 				print(self.data[x][y]),
 			print(" ")
+                print("  "),
+                for x in range(0,8):
+                        print("_"),
+                print ""
+                print("  "),
+                for x in range(0,8):
+                        print("%d" %(x)),
 		print(" ")
 
 	#returns a single bool on if a move is doable
