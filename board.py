@@ -3,7 +3,7 @@ import numpy as np
 import sys
 
 class board:
-	
+
 	def __init__(self, copy = None):
 		self.data = np.zeros((8,8), dtype=np.int)
 		self.currentMove = True
@@ -18,7 +18,7 @@ class board:
 			for x in range(0,8):
 				for y in range(0,8):
 					self.data[x][y] = copy.data[x][y]
-		
+
 	def makeMove(self, x, y):
 		if (not self.check(x,y)):
 			return False
@@ -31,27 +31,27 @@ class board:
 			return True
 		else:
 			return False
-			
+
 	def done(self):
 		for x in range(0,8):
 			for y in range(0,8):
 				if self.data[x][y] == 0:
 					return False
 		return True
-		
+
 	def count(self, sent):
 		compare = -1
 		counter = 0
 		if sent:
 			compare = 1
 		else:
-			compare = 2		
+			compare = 2
 		for x in range(0,8):
 			for y in range(0,8):
 				if self.data[x][y] == compare:
 					counter += 1
 		return counter
-			
+
 	def movePoint(self, point, direction):
 		if direction == 0:
 			point[0] += 1
@@ -73,8 +73,8 @@ class board:
 		elif direction == 7:
 			point[0] += 1
 			point[1] -= 1
-	
-	#updates the board		
+
+	#updates the board
 	def update(self):
 		temp = self.data
 		cursor = [self.mostRecent[0], self.mostRecent[1]]
@@ -84,41 +84,41 @@ class board:
 			cursor = [self.mostRecent[0], self.mostRecent[1]]
 			count = 0
 			goal = self.data[cursor[0]][cursor[1]]
-			
+
 			if goal == 1:
 				goal = 2
 			elif goal == 2:
 				goal = 1
-				
+
 			cursor = [self.mostRecent[0], self.mostRecent[1]]
 			self.movePoint(cursor, x)
 			if goal == 0:
 				continue
-			
+
 			while (0 <= cursor[0] <= 7) and (0 <= cursor[1] <= 7) and self.data[cursor[0]][cursor[1]] == goal:
 				count += 1
 				self.movePoint(cursor, x)
-			
+
 			if (not (0 <= cursor[0] <= 7)) or (not (0 <= cursor[1] <= 7)) or self.data[cursor[0]][cursor[1]] != self.data[self.mostRecent[0], self.mostRecent[1]]:
 				continue
-						
-			cursor = [self.mostRecent[0], self.mostRecent[1]]	
+
+			cursor = [self.mostRecent[0], self.mostRecent[1]]
 			goal = self.data[cursor[0]][cursor[1]]
 			self.movePoint(cursor, x)
 			for y in range(0,count):
 				temp[cursor[0]][cursor[1]] = goal
 				self.movePoint(cursor, x)
-				
+
 		self.data = temp
-	
-	#prints the board out		
+
+	#prints the board out
 	def write(self):
 		for x in range(0,8):
 			for y in range(0,8):
 				print(self.data[x][y]),
 			print(" ")
 		print(" ")
-		
+
 	#returns a single bool on if a move is doable
 	def check(self, xSent, ySent):
 		if self.data[xSent][ySent] != 0:
@@ -136,37 +136,37 @@ class board:
 			cursor = [xSent, ySent]
 			goal = temp[cursor[0]][cursor[1]]
 			count = 0
-			
+
 			if goal == 1:
 				goal = 2
 			elif goal == 2:
 				goal = 1
-				
+
 			cursor = [xSent, ySent]
 			self.movePoint(cursor, x)
 			if goal == 0:
 				continue
-			
+
 			while (0 <= cursor[0] <= 7) and (0 <= cursor[1] <= 7) and temp[cursor[0]][cursor[1]] == goal:
 				count += 1
 				self.movePoint(cursor, x)
-			
-			
+
+
 			if (not (0 <= cursor[0] <= 7)) or (not (0 <= cursor[1] <= 7)) or temp[cursor[0]][cursor[1]] != temp[xSent, ySent]:
 				continue
-	
-			if count > 0:			
+
+			if count > 0:
 				self.data[xSent][ySent] = storage
 				return True
 		self.data[xSent][ySent] = storage
 		return False
-		
+
 	def possible(self):
 		compare = -1
 		if self.currentMove:
 			compare = 1
 		else:
-			compare = 2		
+			compare = 2
 		for x in range(0,8):
 			for y in range(0,8):
 				if self.data[x][y] == 0 and self.check(x, y):

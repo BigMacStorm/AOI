@@ -60,7 +60,7 @@ class Game:
 		print "Making move %d,%d with score %d" %(move[0][0], move[0][1], move[1])
 		return {'i': move[0][0], 'j': move[0][1]}
 
-	#hueristic function that will score the board for the current plauyer. 
+	#hueristic function that will score the board for the current plauyer.
 	#returns the score for the current player so will need to handle that
 	#inside of the minimax recursive function
 	#current algorithm is three fold:
@@ -97,7 +97,7 @@ class Game:
 
 	def minimaxHandler(self, depth):
 		moves = self.board.getMoveList()
-		bestMove = [None, 0]
+		bestMove = [None, -999999999]
 		temp = [None, 0]
 		for x in moves:
 			copy = board.board(self.board)
@@ -105,22 +105,22 @@ class Game:
 			copy.changePlayer()
 			temp[0] = x
 			temp[1] = self.minimaxRecurse(copy, depth-1)
-			if bestMove[0] == None or temp[1] > bestMove[1]:
+			if temp[1] > bestMove[1]:
 				bestMove = temp
 		return bestMove
 
 	def minimaxRecurse(self, sentBoard, depth):
 		if depth == 0 or not sentBoard.possible():
-			return self.evaluate(sentBoard) * -1
+			return self.evaluate(sentBoard)
 		moves = sentBoard.getMoveList()
-		bestMove = None
+		bestMove = 9999999999
 		temp = 0
 		for x in moves:
 			copy = board.board(sentBoard)
 			copy.makeMove(x[0], x[1])
 			copy.changePlayer()
 			temp = self.minimaxRecurse(copy, depth-1)
-			if bestMove == None or temp > bestMove:
+			if temp < bestMove:
 				bestMove = temp
 		return bestMove
 
