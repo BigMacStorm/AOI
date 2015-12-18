@@ -35,6 +35,9 @@ class Game:
 					coord = self.getCompCoord()
 				moveGood = self.board.makeMove(coord['i'], coord['j'])
 				if moveGood != True:
+					if coord['i'] == -1 and coord['j'] == -1:
+						print "Human player has chosen to skip their turn"
+						break
 					print "Invalid move."
 			print "Player %d chose (%d, %d)" %(player, coord['i'], coord['j'])
 			self.board.update()
