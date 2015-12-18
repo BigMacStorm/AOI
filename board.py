@@ -127,6 +127,7 @@ class board:
                 for x in range(0,8):
                         print("%d" %(x)),
 		print(" ")
+		print(" ")
 
 	#returns a single bool on if a move is doable
 	def check(self, xSent, ySent):
