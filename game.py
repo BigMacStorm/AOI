@@ -59,7 +59,7 @@ class Game:
 	def getCompCoord(self):
 		# The AI's kinda smart
 		#the value passed into the handler is the desired depth
-		move = self.minimaxHandler(2)
+		move = self.minimaxHandler(3)
 		print "Making move %d,%d with score %d" %(move[0][0], move[0][1], move[1])
 		return {'i': move[0][0], 'j': move[0][1]}
 
@@ -94,7 +94,8 @@ class Game:
 		ownMoveCount = sentBoard.getMoveCount(compare)
 		compare = 1 if (sentBoard.currentMove == False) else 2
 		enemyMoveCount = sentBoard.getMoveCount(compare)
-		score += ((ownMoveCount - enemyMoveCount) * 100)
+		#score += ((ownMoveCount - enemyMoveCount) * 100)
+		score += ownMoveCount *1
 
 		return score
 
@@ -110,15 +111,8 @@ class Game:
 			temp[1] = self.minimaxRecurse(copy, depth-1)
 			temp[1] *= -1
 			if temp[1] > bestMove[1]:
-				print "better"
 				bestMove[0] = temp[0]
 				bestMove[1] = temp[1]
-			else:
-				print "--------------------"
-				print temp[1]
-				print bestMove[1]
-				print "--------------------"
-		print "================"
 		print len(moves)
 		print bestMove[0][2]
 		return bestMove
