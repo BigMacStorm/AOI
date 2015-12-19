@@ -107,11 +107,14 @@ class Game:
 			simBoard = board.board(self.board)
 			simBoard.makeMove(x[0], x[1])
 			simBoard.changePlayer()
+
                         simMove[0] = [0,0,0]
 			simMove[0][0] = x[0]
 			simMove[0][1] = x[1]
+
 			simMove[1] = self.minimaxRecurse(simBoard, depth-1)
 			simMove[1] *= -1
+
 			if simMove[1] > bestMove[1]:
 				bestMove[0] = simMove[0]
 				bestMove[1] = simMove[1]
@@ -121,18 +124,16 @@ class Game:
 		if depth == 0 or not simBoard.possible():
 			return self.evaluate(simBoard)
 		moves = simBoard.getMoveList()
-		bestScore = None
-		temp = 0
+		bestScore = -999999999
+		currentScore = 0
 		for x in moves:
 			simBoard = board.board(simBoard)
 			simBoard.makeMove(x[0], x[1])
 			simBoard.changePlayer()
-			temp = self.minimaxRecurse(simBoard, depth-1)
-			temp *= -1
-			if bestScore == None or temp > bestScore:
-				bestScore = temp
+
+			currentScore = self.minimaxRecurse(simBoard, depth-1)
+			currentScore *= -1
+
+			if currentScore > bestScore:
+				bestScore = currentScore
 		return bestScore
-
-
-
-
