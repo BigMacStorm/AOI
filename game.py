@@ -85,7 +85,7 @@ class Game:
 				x == 7 and y == 0 or \
 				x == 7 and y == 7 or \
 				x == 0 and y == 7:
-					temp += 1
+					temp += 10
 				#if it equals the current player
 				if sentBoard.data[x][y] == compare:
 					score += temp
@@ -95,7 +95,7 @@ class Game:
 		compare = 1 if (sentBoard.currentMove == False) else 2
 		enemyMoveCount = sentBoard.getMoveCount(compare)
 		#score += ((ownMoveCount - enemyMoveCount) * 100)
-		score += ownMoveCount *1
+		score += ownMoveCount *5
 
 		return score
 
