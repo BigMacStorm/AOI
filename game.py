@@ -102,36 +102,36 @@ class Game:
 	def minimaxHandler(self, depth):
 		moves = self.board.getMoveList()
 		bestMove = [None, -999999999]
-		temp = [None, 0]
+		simMove = [None, 0]
 		for x in moves:
-			copy = board.board(self.board)
-			copy.makeMove(x[0], x[1])
-			copy.changePlayer()
-			temp[0] = x
-			temp[1] = self.minimaxRecurse(copy, depth-1)
-			temp[1] *= -1
-			if temp[1] > bestMove[1]:
-				bestMove[0] = temp[0]
-				bestMove[1] = temp[1]
-		print len(moves)
-		print bestMove[0][2]
+			simBoard = board.board(self.board)
+			simBoard.makeMove(x[0], x[1])
+			simBoard.changePlayer()
+                        simMove[0] = [0,0,0]
+			simMove[0][0] = x[0]
+			simMove[0][1] = x[1]
+			simMove[1] = self.minimaxRecurse(simBoard, depth-1)
+			simMove[1] *= -1
+			if simMove[1] > bestMove[1]:
+				bestMove[0] = simMove[0]
+				bestMove[1] = simMove[1]
 		return bestMove
 
-	def minimaxRecurse(self, sentBoard, depth):
-		if depth == 0 or not sentBoard.possible():
-			return self.evaluate(sentBoard)
-		moves = sentBoard.getMoveList()
-		bestMove = None
+	def minimaxRecurse(self, simBoard, depth):
+		if depth == 0 or not simBoard.possible():
+			return self.evaluate(simBoard)
+		moves = simBoard.getMoveList()
+		bestScore = None
 		temp = 0
 		for x in moves:
-			copy = board.board(sentBoard)
-			copy.makeMove(x[0], x[1])
-			copy.changePlayer()
-			temp = self.minimaxRecurse(copy, depth-1)
+			simBoard = board.board(simBoard)
+			simBoard.makeMove(x[0], x[1])
+			simBoard.changePlayer()
+			temp = self.minimaxRecurse(simBoard, depth-1)
 			temp *= -1
-			if bestMove == None or temp > bestMove:
-				bestMove = temp
-		return bestMove
+			if bestScore == None or temp > bestScore:
+				bestScore = temp
+		return bestScore
 
 
 
