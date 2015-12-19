@@ -59,6 +59,8 @@ class Game:
 	def getCompCoord(self):
 		# The AI's kinda smart
 		#the value passed into the handler is the desired depth
+		#Change this three to another number if you would like to change the
+		#depth of the search
 		move = self.minimaxHandler(3)
 		print "Making move %d,%d with score %d" %(move[0][0], move[0][1], move[1])
 		return {'i': move[0][0], 'j': move[0][1]}
@@ -74,18 +76,22 @@ class Game:
 		score = 0
 		temp = 0
 		compare = 1
+		#Change these variables to change the weights
+		PIECE_WEIGHT = 1
+		CORNER_WEIGHT = 10
+		FREEDOM_WEIGHT = 5
 		if not sentBoard.currentMove:
 			compare = 2
 		for x in range(0,8):
 			for y in range (0,8):
 				if sentBoard.data[x][y] == 0:
 					continue
-				temp = 1
+				temp = PIECE_WEIGHT
 				if x == 0 and y == 0 or \
 				x == 7 and y == 0 or \
 				x == 7 and y == 7 or \
 				x == 0 and y == 7:
-					temp += 10
+					temp += CORNER_WEIGHT
 				#if it equals the current player
 				if sentBoard.data[x][y] == compare:
 					score += temp
@@ -95,7 +101,7 @@ class Game:
 		compare = 1 if (sentBoard.currentMove == False) else 2
 		enemyMoveCount = sentBoard.getMoveCount(compare)
 		#score += ((ownMoveCount - enemyMoveCount) * 100)
-		score += ownMoveCount *5
+		score += ownMoveCount * FREEDOM_WEIGHT
 
 		return score
 
